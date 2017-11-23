@@ -6,6 +6,7 @@
 # 2,3,1
 # Each line indicates that a link between NodeA and NodeB appears at a particular Moment
 
+import networkx as nx
 from random import SystemRandom
 # random.SystemRandom uses the system function os.urandom() to generate random numbers
 # randrange generates a pseudo-random integer from the range indicated
@@ -30,10 +31,13 @@ def getRandomsNodesToConnect(connect):
   return randomNodes
 
 def printEdges(e1,e2,t="",addNode=True):
-  global poolNodes
-  print str(e1) + separator + str(e2) + separator + str(t)
-  #http://pythoncentral.io/select-random-item-list-tuple-data-structure-python/
+  global poolNodes, G
+  if __name__ == "__main__":
+    print str(e1) + separator + str(e2) + separator + str(t)
+  # http://pythoncentral.io/select-random-item-list-tuple-data-structure-python/
   if addNode:
+    # https://zenagiwa.wordpress.com/2014/10/23/graphing-networks-for-beginners/
+    G.add_edge(e1,e2)
     poolNodes.append(e1)
     poolNodes.append(e2)
     if typeProbability == 1 and len(poolNodes) > 0:
@@ -57,8 +61,21 @@ def randomNodes():
     for e in connections:
       printEdges(i,e,i-fullyConnectedNodes+1)
 
-initialNodes()
-# Limit the process, max 5 GB
-if typeProbability == 3 and totalNodes > 30:
-  totalNodes = 31 
-randomNodes()
+def generateCsv(tn=totalNodes,tp=typeProbability,cpn=connectionsPerNode,fc=fullyConnectedNodes,se=separator):
+  global G
+  G = nx.Graph(name='n'+str(tn)+'p'+str(tp)) #creates a graph
+  global totalNodes,typeProbability,connectionsPerNode,fullyConnectedNodes,separator
+  totalNodes=tn
+  typeProbability=tp
+  connectionsPerNode=cpn
+  fullyConnectedNodes=fc
+  separator=se
+  initialNodes()
+  # Limit the process, max 5 GB
+  if typeProbability == 3 and totalNodes > 30:
+    totalNodes = 31 
+  randomNodes()
+  return G
+
+if __name__ == "__main__":
+  generateCsv()
