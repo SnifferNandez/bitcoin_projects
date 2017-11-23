@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# For begginers https://programminghistorian.org/lessons/exploring-and-analyzing-network-data-with-python
 
 import networkx as nx
 #import matplotlib.pyplot as plt
@@ -16,3 +17,5 @@ print "Diameter: " + str(nx.diameter(G))
 print "Center: " + str(nx.center(G))
 #print "Periphery: " + str(nx.periphery(G))
 
+#Export your into Gephi's GEXF format
+#nx.write_gexf(G, 'bitcoin_network.gexf')
