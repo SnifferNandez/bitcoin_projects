@@ -13,9 +13,9 @@ from random import SystemRandom
 # choice select a single item from a Python sequence type - that's any of str, unicode, list, tuple, bytearray, buffer, xrange -
 # sample which does support sets
 
-typeProbability = 2 # 1=Equal, 2=Connections, 3=Time
+typeProbability = 3 # 1=Equal, 2=Connections, 3=Time
 fullyConnectedNodes = 8 # on initial time, t0=1
-totalNodes = 13
+totalNodes = 30
 connectionsPerNode = 8
 separator = ","
 
@@ -27,10 +27,20 @@ def getRandomsNodesToConnect(connect):
   randomNodes = set()
   if typeProbability == 1 or typeProbability == 2:
     maxRange = len(poolNodes)
+  if typeProbability == 3:
+    maxRange =  len(poolNodes) * (len(poolNodes) + 1) / 2
   while len(randomNodes) < connect:
-    randomNode = poolNodes[prgn.randrange(maxRange)]
+    randomValue = prgn.randrange(maxRange)
     if typeProbability == 1 or typeProbability == 2:
+      randomNode = poolNodes[randomValue]
       randomNodes.add(randomNode)
+    if typeProbability == 3:
+      probSum = 1
+      randomNode = 1
+      while probSum < randomValue:
+        randomNode = randomNode + 1
+        probSum = probSum + randomNode
+      randomNodes.add(len(poolNodes) - randomNode + 1)
   return randomNodes
 
 def addNodeProbability(e1,e2):
@@ -80,9 +90,6 @@ def generateCsv(tn=totalNodes,tp=typeProbability,cpn=connectionsPerNode,fc=fully
   fullyConnectedNodes=fc
   separator=se
   initialNodes()
-  # Limit the process, max 5 GB
-  if typeProbability == 3 and totalNodes > 30:
-    totalNodes = 31 
   randomNodes()
   return G
 
