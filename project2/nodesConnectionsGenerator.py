@@ -28,19 +28,23 @@ def getRandomsNodesToConnect(connect):
   if typeProbability == 1 or typeProbability == 2:
     maxRange = len(poolNodes)
   if typeProbability == 3:
-    maxRange =  len(poolNodes) * (len(poolNodes) + 1) / 2
+    moments = len(poolNodes) - fullyConnectedNodes + 1
+    maxRange =  (moments * fullyConnectedNodes) + ((moments - 1) * moments / 2)
   while len(randomNodes) < connect:
     randomValue = prgn.randrange(maxRange)
     if typeProbability == 1 or typeProbability == 2:
       randomNode = poolNodes[randomValue]
       randomNodes.add(randomNode)
     if typeProbability == 3:
-      probSum = 1
+      probSum = maxRange - moments
       randomNode = 1
-      while probSum < randomValue:
+      while probSum > randomValue:
+        if randomNode <= fullyConnectedNodes:
+          probSum = probSum - moments
+        else:
+          probSum = probSum - moments - randomNode + fullyConnectedNodes
         randomNode = randomNode + 1
-        probSum = probSum + randomNode
-      randomNodes.add(len(poolNodes) - randomNode + 1)
+      randomNodes.add(randomNode)
   return randomNodes
 
 def addNodeProbability(e1,e2):

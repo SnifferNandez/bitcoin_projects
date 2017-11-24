@@ -11,8 +11,8 @@ print ""
 G = gen(10000,2)
 print nx.info(G)
 print ""
-#G = gen(10000,3)
-#print nx.info(G)
+G = gen(10000,3)
+print nx.info(G)
 # Functions
 #print "Density: " + str(nx.density(G))
 #print "Degrees: " + str(nx.degree(G))
