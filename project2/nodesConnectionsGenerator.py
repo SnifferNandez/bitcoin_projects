@@ -13,11 +13,11 @@ from random import SystemRandom
 # choice select a single item from a Python sequence type - that's any of str, unicode, list, tuple, bytearray, buffer, xrange -
 # sample which does support sets
 
-typeProbability = 3 # 1=Equal, 2=Connections, 3=Time
+typeProbability = 2 # 1=Equal, 2=Connections, 3=Time
 fullyConnectedNodes = 8 # on initial time, t0=1
-totalNodes = 10000
+totalNodes = 1000
 connectionsPerNode = 8
-separator = ","
+separator = ','
 
 prgn = SystemRandom()
 poolNodes = []
@@ -60,8 +60,8 @@ def addNodeProbability(e1,e2):
     poolNodes.append(e2)
   
 
-def printEdges(e1,e2,t="",addNode=True):
-  if __name__ == "__main__":
+def printEdges(e1,e2,t='',addNode=True):
+  if __name__ == '__main__':
     print str(e1) + separator + str(e2) + separator + str(t)
   # http://pythoncentral.io/select-random-item-list-tuple-data-structure-python/
   if addNode:
@@ -79,11 +79,10 @@ def randomNodes():
   for i in range(fullyConnectedNodes+1,totalNodes+1):
     connect = i if i < connectionsPerNode else connectionsPerNode
     connections = getRandomsNodesToConnect(connect)
-    #print "".join(str(i) + " " + str(e) + " " + str(i-fullyConnectedNodes+1) + "\n" for e in connections)[:-1]
     for e in connections:
       printEdges(i,e,i-fullyConnectedNodes+1)
 
-def generateCsv(tn=totalNodes,tp=typeProbability,cpn=connectionsPerNode,fc=fullyConnectedNodes,se=separator,id=""):
+def generateCsv(tn=totalNodes,tp=typeProbability,cpn=connectionsPerNode,fc=fullyConnectedNodes,se=separator,id=''):
   global G, poolNodes
   G = nx.Graph(name='n'+str(tn)+'p'+str(tp)+'i'+str(id)) #creates a graph
   poolNodes = []
@@ -97,5 +96,5 @@ def generateCsv(tn=totalNodes,tp=typeProbability,cpn=connectionsPerNode,fc=fully
   randomNodes()
   return G
 
-if __name__ == "__main__":
+if __name__ == '__main__':
   generateCsv()
