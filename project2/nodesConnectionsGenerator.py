@@ -15,7 +15,7 @@ from random import SystemRandom
 
 typeProbability = 3 # 1=Equal, 2=Connections, 3=Time
 fullyConnectedNodes = 8 # on initial time, t0=1
-totalNodes = 30
+totalNodes = 10000
 connectionsPerNode = 8
 separator = ","
 
@@ -83,9 +83,9 @@ def randomNodes():
     for e in connections:
       printEdges(i,e,i-fullyConnectedNodes+1)
 
-def generateCsv(tn=totalNodes,tp=typeProbability,cpn=connectionsPerNode,fc=fullyConnectedNodes,se=separator):
+def generateCsv(tn=totalNodes,tp=typeProbability,cpn=connectionsPerNode,fc=fullyConnectedNodes,se=separator,id=""):
   global G, poolNodes
-  G = nx.Graph(name='n'+str(tn)+'p'+str(tp)) #creates a graph
+  G = nx.Graph(name='n'+str(tn)+'p'+str(tp)+'i'+str(id)) #creates a graph
   poolNodes = []
   global totalNodes,typeProbability,connectionsPerNode,fullyConnectedNodes,separator
   totalNodes=tn
